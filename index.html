@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>DwC Excel Template Generator</title>
+    <style>
+    body { font: 16px/1.4 "Helvetica Neue", helvetica, sans-serif; width: 90%; margin: 0 auto; }
+    fieldset { margin-top: 1em; }
+    fieldset label { display: block; float: left; width: 24em; margin-right: 1em; }
+    fieldset legend { font-weight: bold; text-transform: uppercase; }
+    fieldset { user-select: none; }
+    main { width: 60%; }
+    aside { height: 100%; width: 35%; position: fixed; right: 0; top: 0; border-left: 2px solid #aaa; padding-left: 1em; padding-right: 2em; background: #fcfcfc; }
+    #select-language { float: right; }
+    input[type='checkbox'] { float: left; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.0.1/exceljs.min.js" integrity="sha256-0DOS46REHrTonVcCYINNqHukCqidb/zKdZksnsaaDaw=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js" integrity="sha256-u/J1Urdrk3nCYFefpoeTMgI5viU1ujCDu2fXXoSJjhg=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <aside>
+        <h1 id="asideHeading"></h1>
+        <hr>
+        <p id="asideDef"></p>
+        <p id="asideComments"></p>
+        <p id="asideEg"></p>
+    </aside>
+    <main>
+        <select name="language" id="language">
+            <option value="en" selected>English</option>
+            <option value="ja">日本語</option>
+            <option value="es">Español</option>
+        </select>
+        <h1>DwC Excel Template Generator</h1>
+        <p>
+            Check the boxes next to the terms you want to include in your template and click the <b>Create template</b> button.
+            <br><small><a href="http://rs.tdwg.org/dwc/terms/">Darwin Core Terms: A quick reference guide</a></small>
+        </p>
+        <div id="excelForm">
+        </div>
+        <button onClick="generateXLSX()">Create template</button>
+    </main>
+    <script src="dwcTranslations.js"></script>
+    <script src="term_versions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
