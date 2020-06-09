@@ -2,15 +2,18 @@
 <head>
     <title>DwC Excel Template Generator</title>
     <style>
-    body { font: 16px/1.4 "Helvetica Neue", helvetica, sans-serif; width: 90%; margin: 0 auto; }
+    body { font: 16px/1.4 "Helvetica Neue", helvetica, sans-serif; width: 90%; margin: 0 auto; padding: 30px 0; }
     fieldset { margin-top: 1em; }
     fieldset label { display: block; float: left; width: 24em; margin-right: 1em; }
     fieldset legend { font-weight: bold; text-transform: uppercase; }
     fieldset { user-select: none; }
     main { width: 60%; }
     aside { height: 100%; width: 35%; position: fixed; right: 0; top: 0; border-left: 2px solid #aaa; padding-left: 1em; padding-right: 2em; background: #fcfcfc; }
-    #select-language { float: right; }
+    #language { float: right; }
     input[type='checkbox'] { float: left; }
+
+    /* Disable */
+    #geologicalcontext, #measurementorfact, #rdf-schema, #usewithiri, #resourcerelationship, #materialsample { display: none; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.0.1/exceljs.min.js" integrity="sha256-0DOS46REHrTonVcCYINNqHukCqidb/zKdZksnsaaDaw=" crossorigin="anonymous"></script>
@@ -37,10 +40,20 @@
         </p>
         <div id="excelForm">
         </div>
+        <fieldset>
+          <legend>Other Options</legend>
+          <label><input name="uuid" type="checkbox" value="y" checked="">Generate occurrence IDs (UUIDs)</label>
+          <label><input name="measurementorfact" type="checkbox" value="y">Generate a 'Measurement or Fact' sheet</label>
+          <label><input name="metadata" type="checkbox" value="y" disabled="">Generate a metadata sheet</label>
+          <label><input name="readme" type="checkbox" value="y" disabled="">Generate a README sheet</label>
+        </fieldset>
+        <br>
         <button onClick="generateXLSX()">Create template</button>
     </main>
     <script src="dwcTranslations.js"></script>
     <script src="term_versions.js"></script>
+    <script src="dwc_occurrence_2020-04-15.js"></script>
+    <script src="defaults.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

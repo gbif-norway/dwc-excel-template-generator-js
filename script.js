@@ -5,25 +5,25 @@ const dwcTranslationsObj = dwcTranslations.reduce(function(obj, item) {
 
 const recommendedTerms = term_versions.filter(function(item) { return item['status'] == 'recommended' && item['organized_in'] != ''; })
 
-const dwcTerms = recommendedTerms.reduce(function(obj, item) {
+const dwcTerms = recommendedTerms.reduce(function(obj, item) { /* Merges terms + translations, and organises */
     const termName = item['term_iri'].split('/').pop();
     const allElements = {...item, ...dwcTranslationsObj[termName]}
-    const org = item['organized_in'].replace(/\/$/g, '').split('/').pop();
+    const org = item['organized_in'].replace(/\/$/g, '').replace('#Class', '').split('/').pop();
     obj[org] = obj[org] ? obj[org] : [];
     obj[org].push(allElements);
     return obj;
 }, {})
 
 const form = document.getElementById('excelForm');
-for(let [organization_url, terms] of Object.entries(dwcTerms)) {
+for(let [organization_url, terms] of Object.entries(dwcTerms)) { /* Build the html user input form used to select options for the generated excel template */
     const fieldset = document.createElement('fieldset')
-    //const organization_label = organization_url.replace(/\/$/g, '').split('/').pop();
-
+    fieldset.setAttribute('id', organization_url.toLowerCase());
     fieldset.appendChild(Object.assign(document.createElement('legend'), {textContent: organization_url}));
+
     terms.forEach(term => {
         const label = document.createElement('label')
         label.textContent = term['label'];
-        label.appendChild(Object.assign(document.createElement('input'), {type: 'checkbox', value: 'y', name: term['label']}));
+        label.appendChild(Object.assign(document.createElement('input'), {type: 'checkbox', name: term['label'], checked: defaults.includes(term['label'])}));
         label.setAttribute('data-skos_definition_en', term['skos_definition_en']);
         label.setAttribute('data-skos_definition_es', term['skos_definition_es']);
         label.setAttribute('data-skos_definition_ja', term['skos_definition_ja']);
@@ -44,10 +44,31 @@ for(let [organization_url, terms] of Object.entries(dwcTerms)) {
     form.appendChild(fieldset);
 };
 
+function uuidv4() { /* https://stackoverflow.com/questions/105034/how-to-create-guid-uuid */
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
 const generateXLSX = async() => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('My Sheet');
-    worksheet.getColumn(6).values = [1,2,3,4,5];
+    const worksheet = workbook.addWorksheet('Occurrences');
+    const lang = document.getElementById('language').value;
+    const selectedColumns = Array.from(document.getElementById('excelForm').querySelectorAll('input[type=checkbox]:checked'));
+    columns = selectedColumns.map(column => ({
+        'header': column['name'],
+        'note': column.parentElement.dataset['skos_definition_' + lang].replace(/\s+/gm, ' '),
+        'width': column['name'].length
+    }));
+    worksheet.columns = columns;
+
+    const headerRow = worksheet.getRow(1);
+    for(const [i, column] of Object.entries(columns)) {
+        let cell = headerRow.getCell(parseInt(i) + 1);
+        if(column['note'] != 'undefined') { cell.note = column['note'] }
+        cell.style = {font: {bold: true}, fill: {type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFAA'}}};
+    };
+
     workbook.xlsx.writeBuffer()
       .then(buffer => saveAs(new Blob([buffer]), `${Date.now()}_feedback.xlsx`))
       .catch(err => console.log('Error writing excel export', err))

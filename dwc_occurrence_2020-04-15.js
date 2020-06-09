@@ -1,0 +1,1732 @@
+var occurrence_terms = [
+			{
+				"_group": "Record-level",
+				"_name": "type",
+				"_thesaurus": "http://rs.gbif.org/vocabulary/dcterms/type.xml",
+				"_namespace": "http://purl.org/dc/terms/",
+				"_qualName": "http://purl.org/dc/terms/type",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dcterms:type",
+				"_dc:description": "The nature or genre of the resource. For Darwin Core, recommended best practice is to use the name of the class that defines the root of the record.",
+				"_examples": "\"StillImage\", \"MovingImage\", \"Sound\", \"PhysicalObject\", \"Event\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "modified",
+				"_type": "date",
+				"_namespace": "http://purl.org/dc/terms/",
+				"_qualName": "http://purl.org/dc/terms/modified",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dcterms:modified",
+				"_dc:description": "The most recent date-time on which the resource was changed. For Darwin Core, recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E)",
+				"_examples": "\"1963-03-08T14:07-0600\" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, \"2009-02-20T08:40Z\" is 20 Feb 2009 8:40am UTC, \"1809-02-12\" is 12 Feb 1809, \"1906-06\" is Jun 1906, \"1971\" is just that year, \"2007-03-01T13:00:00Z/2008-05-11T15:30:00Z\" is the interval between 1 Mar 2007 1pm UTC and 11 May 2008 3:30pm UTC, \"2007-11-13/15\" is the interval between 13 Nov 2007 and 15 Nov 2007",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "language",
+				"_namespace": "http://purl.org/dc/terms/",
+				"_qualName": "http://purl.org/dc/terms/language",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dcterms:language",
+				"_dc:description": "A language of the resource. Recommended best practice is to use a controlled vocabulary such as RFC 4646 [RFC4646]",
+				"_examples": "\"en\" for English, \"es\" for Spanish",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "license",
+				"_namespace": "http://purl.org/dc/terms/",
+				"_qualName": "http://purl.org/dc/terms/license",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dcterms:license",
+				"_dc:description": "A legal document giving official permission to do something with the resource.",
+				"_examples": "\"http://creativecommons.org/publicdomain/zero/1.0/legalcode\", \"http://creativecommons.org/licenses/by/4.0/legalcode\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "rightsHolder",
+				"_namespace": "http://purl.org/dc/terms/",
+				"_qualName": "http://purl.org/dc/terms/rightsHolder",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dcterms:rightsHolder",
+				"_dc:description": "A person or organization owning or managing rights over the resource",
+				"_examples": "\"The Regents of the University of California.\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "accessRights",
+				"_namespace": "http://purl.org/dc/terms/",
+				"_qualName": "http://purl.org/dc/terms/accessRights",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dcterms:accessRights",
+				"_dc:description": "Information about who can access the resource or an indication of its security status. Access Rights may include information regarding access or restrictions based on privacy, security, or other policies",
+				"_examples": "\"not-for-profit use only\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "bibliographicCitation",
+				"_namespace": "http://purl.org/dc/terms/",
+				"_qualName": "http://purl.org/dc/terms/bibliographicCitation",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dcterms:bibliographicCitation",
+				"_dc:description": "A bibliographic reference for the resource as a statement indicating how this record should be cited (attributed) when used. Recommended practice is to include sufficient bibliographic detail to identify the resource as unambiguously as possible",
+				"_examples": "\"Ctenomys sociabilis (MVZ 165861)\" for a specimen, \"Oliver P. Pearson. 1985. Los tuco-tucos (genera Ctenomys) de los Parques Nacionales Lanin y Nahuel Huapi, Argentina Historia Natural, 5(37):337-343.\" for a Taxon",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "references",
+				"_namespace": "http://purl.org/dc/terms/",
+				"_qualName": "http://purl.org/dc/terms/references",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dcterms:references",
+				"_dc:description": "A URL to a related resource that is referenced, cited, or otherwise pointed to by the described resource. Often another webpage showing the same, but richer resource",
+				"_examples": "http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=552479",
+				"_type": "uri",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "institutionID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/institutionID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#institutionID",
+				"_dc:description": "An identifier for the institution having custody of the object(s) or information referred to in the record.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "collectionID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/collectionID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#collectionID",
+				"_dc:description": "An identifier for the collection or dataset from which the record was derived. For physical specimens, the recommended best practice is to use the identifier in a collections registry such as the Biodiversity Collections Index (http://www.biodiversitycollectionsindex.org/).",
+				"_examples": "\"urn:lsid:biocol.org:col:34818\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "datasetID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/datasetID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#datasetID",
+				"_dc:description": "An identifier for the set of data. May be a global unique identifier or an identifier specific to a collection or institution.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "institutionCode",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/institutionCode",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#institutionCode",
+				"_dc:description": "The name (or acronym) in use by the institution having custody of the object(s) or information referred to in the record.",
+				"_examples": "\"MVZ\", \"FMNH\", \"AKN-CLO\", \"University of California Museum of Paleontology (UCMP)\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "collectionCode",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/collectionCode",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#collectionCode",
+				"_dc:description": "The name, acronym, coden, or initialism identifying the collection or data set from which the record was derived.",
+				"_examples": "\"Mammals\", \"Hildebrandt\", \"eBird\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "datasetName",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/datasetName",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#datasetName",
+				"_dc:description": "The name identifying the data set from which the record was derived.",
+				"_examples": "\"Grinnell Resurvey Mammals\", \"Lacey Ctenomys Recaptures\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "ownerInstitutionCode",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/ownerInstitutionCode",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#ownerInstitutionCode",
+				"_dc:description": "The name (or acronym) in use by the institution having ownership of the object(s) or information referred to in the record.",
+				"_examples": "\"NPS\", \"APN\", \"InBio\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "basisOfRecord",
+				"_thesaurus": "http://rs.gbif.org/vocabulary/dwc/basis_of_record.xml",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/basisOfRecord",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#basisOfRecord",
+				"_dc:description": "The specific nature of the data record - a subtype of the dcterms:type. Recommended best practice is to use a controlled vocabulary such as the Darwin Core Type Vocabulary (http://rs.tdwg.org/dwc/terms/type-vocabulary/index.htm).",
+				"_examples": "\"PreservedSpecimen\", \"FossilSpecimen\", \"LivingSpecimen\", \"HumanObservation\", \"MachineObservation\"",
+				"_required": "true"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "informationWithheld",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/informationWithheld",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#informationWithheld",
+				"_dc:description": "Additional information that exists, but that has not been shared in the given record.",
+				"_examples": "\"location information not given for endangered species\", \"collector identities withheld\", \"ask about tissue samples\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "dataGeneralizations",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/dataGeneralizations",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dataGeneralizations",
+				"_dc:description": "Actions taken to make the shared data less specific or complete than in its original form. Suggests that alternative data of higher quality may be available on request.",
+				"_examples": "\"Coordinates generalized from original GPS coordinates to the nearest half degree grid cell\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Record-level",
+				"_name": "dynamicProperties",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/dynamicProperties",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dynamicProperties",
+				"_dc:description": "A list (concatenated and separated) of additional measurements, facts, characteristics, or assertions about the record. Meant to provide a mechanism for structured content such as key-value pairs. The recommended best practice is to use a key:value encoding schema such as JSON.",
+				"_examples": "\"{\"heightInMeters\":1.5}\", \"{\"tragusLengthInMeters\":0.014, \"weightInGrams\":120}\", \"{\"natureOfID\":\"expert identification\", \"identificationEvidence\":\"cytochrome B sequence\"}\", \"{\"relativeHumidity\":28, \"airTemperatureInCelcius\":22, \"sampleSizeInKilograms\":10}\", \"{\"aspectHeading\":277, \"slopeInDegrees\":6}\", \"{\"iucnStatus\":\"vulnerable\", \"taxonDistribution\":\"Neuquén, Argentina\"}\"",
+				"_required": "false"
+			},
+			{
+				"_group": "MaterialSample",
+				"_name": "materialSampleID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/materialSampleID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#materialSampleID",
+				"_dc:description": "An identifier for the MaterialSample (as opposed to a particular digital record of the material sample). In the absence of a persistent global unique identifier, construct one from a combination of identifiers in the record that will most closely make the materialSampleID globally unique.",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "occurrenceID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/occurrenceID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#occurrenceID",
+				"_dc:description": "An identifier for the Occurrence (as opposed to a particular digital record of the occurrence). In the absence of a persistent global unique identifier, construct one from a combination of identifiers in the record that will most closely make the occurrenceID globally unique.",
+				"_examples": "For a specimen in the absence of a bona fide global unique identifier, for example, use the form: \"urn:catalog:[institutionCode]:[collectionCode]:[catalogNumber]\". Examples: \"urn:lsid:nhm.ku.edu:Herps:32\", \"urn:catalog:FMNH:Mammal:145732\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "catalogNumber",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/catalogNumber",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#catalogNumber",
+				"_dc:description": "An identifier (preferably unique) for the record within the data set or collection.",
+				"_examples": "\"2008.1334\", \"145732a\", \"145732\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "occurrenceRemarks",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/occurrenceRemarks",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#occurrenceRemarks",
+				"_dc:description": "Comments or notes about the Occurrence.",
+				"_examples": "\"found dead on road\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "recordNumber",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/recordNumber",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#recordNumber",
+				"_dc:description": "An identifier given to the Occurrence at the time it was recorded. Often serves as a link between field notes and an Occurrence record, such as a specimen collector's number.",
+				"_examples": "\"OPP 7101\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "recordedBy",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/recordedBy",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#recordedBy",
+				"_dc:description": "A list (concatenated and separated) of names of people, groups, or organizations responsible for recording the original Occurrence. The primary collector or observer, especially one who applies a personal identifier (recordNumber), should be listed first. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"Oliver P. Pearson | Anita K. Pearson\" where the value in recordNumber \"OPP 7101\" corresponds to the number for the specimen in the field catalog (collector number) of Oliver P. Pearson.",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "recordedByID",
+				"_namespace": "http://rs.gbif.org/terms/1.0/",
+				"_qualName": "http://rs.gbif.org/terms/1.0/recordedByID",
+				"_dc:description": "An unordered list (concatenated and separated) of IDs representing names of people, groups, or organizations responsible for recording the original Occurrence. No semantics should be assumed, including for example an ordering of identifiers to indicate a primary collector or any institutional affiliation. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"https://orcid.org/0000-0001-6215-3617 | https://orcid.org/0000-0003-1691-239X\" \"https://orcid.org/0000-0001-6215-3617 | https://www.wikidata.org/entity/Q28913658\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "individualCount",
+				"_type": "integer",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/individualCount",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#individualCount",
+				"_dc:description": "The number of individuals represented present at the time of the Occurrence.",
+				"_examples": "\"1\", \"25\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "organismQuantity",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/organismQuantity",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#organismQuantity",
+				"_dc:description": "A number or enumeration value for the quantity of organisms.",
+				"_examples": "An organismQuantity must have a corresponding organismQuantityType, e.g., \"27\" for organismQuantity with \"individuals\" for organismQuantityType; \"12.5\" for organismQuantity with \"%biomass\" for organismQuantityType; \"r\" for organismQuantity with \"BraunBlanquetScale\" for organismQuantityType.",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "organismQuantityType",
+				"_thesaurus": "http://rs.gbif.org/vocabulary/gbif/quantity_type_2015-07-10.xml",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/organismQuantityType",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#organismQuantityType",
+				"_dc:description": "The type of quantification system used for the quantity of organisms.",
+				"_examples": "An organismQuantityType must have a corresponding organismQuantity, e.g., \"27\" for organismQuantity with \"individuals\" for organismQuantityType; \"12.5\" for organismQuantity with \"%biomass\" for organismQuantityType; \"r\" for organismQuantity with \"BraunBlanquetScale\" for organismQuantityType.",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "sex",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/sex",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#sex",
+				"_dc:description": "The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"female\", \"hermaphrodite\", \"male\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "lifeStage",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/lifeStage",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#lifeStage",
+				"_dc:description": "The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"egg\", \"eft\", \"juvenile\", \"adult\", \"2 adults 4 juveniles\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "reproductiveCondition",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/reproductiveCondition",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#reproductiveCondition",
+				"_dc:description": "The reproductive condition of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"non-reproductive\", \"pregnant\", \"in bloom\", \"fruit-bearing\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "behavior",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/behavior",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#behavior",
+				"_dc:description": "A description of the behavior shown by the subject at the time the Occurrence was recorded.  Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"roosting\", \"foraging\", \"running\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "establishmentMeans",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/establishmentMeans",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#establishmentMeans",
+				"_dc:description": "The process by which the biological individual(s) represented in the Occurrence became established at the location. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"cultivated\", \"invasive\", \"escaped from captivity\", \"wild\", \"native\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "occurrenceStatus",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/occurrenceStatus",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#occurrenceStatus",
+				"_dc:description": "A statement about the presence or absence of a Taxon at a Location. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"present\", \"absent\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "preparations",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/preparations",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#preparations",
+				"_dc:description": "A list (concatenated and separated) of preparations and preservation methods for a specimen. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"skin | skull | skeleton\", \"whole animal (ETOH) | tissue (EDTA)\", \"fossil\", \"cast\", \"photograph\", \"DNA extract\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "disposition",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/disposition",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#disposition",
+				"_dc:description": "The current state of a specimen with respect to the collection identified in collectionCode or collectionID. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"in collection\", \"missing\", \"voucher elsewhere\", \"duplicates elsewhere\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "otherCatalogNumbers",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/otherCatalogNumbers",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#otherCatalogNumbers",
+				"_dc:description": "A list (concatenated and separated) of previous or alternate fully qualified catalog numbers or other human-used identifiers for the same Occurrence, whether in the current or any other data set or collection. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"FMNH:Mammal:1234\", \"NPS YELLO6778 | MBG 33424\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "associatedMedia",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/associatedMedia",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#associatedMedia",
+				"_dc:description": "A list (concatenated and separated) of identifiers (publication, global unique identifier, URI) of media associated with the Occurrence. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"http://arctos.database.museum/SpecimenImages/UAMObs/Mamm/2/P7291179.JPG\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "associatedReferences",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/associatedReferences",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#associatedReferences",
+				"_dc:description": "A list (concatenated and separated) of identifiers (publication, bibliographic reference, global unique identifier, URI) of literature associated with the Occurrence. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"http://www.sciencemag.org/cgi/content/abstract/322/5899/261\", \"Christopher J. Conroy, Jennifer L. Neuwald. 2008. Phylogeographic study of the California vole, Microtus californicus Journal of Mammalogy, 89(3):755-767.\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "associatedSequences",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/associatedSequences",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#associatedSequences",
+				"_dc:description": "A list (concatenated and separated) of identifiers (publication, global unique identifier, URI) of genetic sequence information associated with the Occurrence. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"GenBank: U34853.1\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Occurrence",
+				"_name": "associatedTaxa",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/associatedTaxa",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#associatedTaxa",
+				"_dc:description": "A list (concatenated and separated) of identifiers or names of taxa and their associations with the Occurrence. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"host: Quercus alba\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Organism",
+				"_name": "organismID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/organismID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#organismID",
+				"_dc:description": "An identifier for the Organism instance (as opposed to a particular digital record of the Organism). May be a globally unique identifier or an identifier specific to the data set.",
+				"_required": "false"
+			},
+			{
+				"_group": "Organism",
+				"_name": "organismName",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/organismName",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#organismName",
+				"_dc:description": "A textual name or label assigned to an Organism instance.",
+				"_examples": "\"Huberta\", \"Boab Prison Tree\", \"J pod\".",
+				"_required": "false"
+			},
+			{
+				"_group": "Organism",
+				"_name": "organismScope",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/organismScope",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#organismScope",
+				"_dc:description": "A description of the kind of Organism instance. Can be used to indicate whether the Organism instance represents a discrete organism or if it represents a particular type of aggregation. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"multicellular organism\", \"virus\", \"clone\" \"pack\", \"colony\".",
+				"_required": "false"
+			},
+			{
+				"_group": "Organism",
+				"_name": "associatedOccurrences",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/associatedOccurrences",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#associatedOccurrences",
+				"_dc:description": "A list (concatenated and separated) of identifiers of other Occurrence records and their associations to this Occurrence. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"sibling of FMNH:Mammal:1234 | sibling of FMNH:Mammal:1235\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Organism",
+				"_name": "associatedOrganisms",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/associatedOrganisms",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#associatedOrganisms",
+				"_dc:description": "A list (concatenated and separated) of identifiers of other Organisms and their associations to this Organism. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"sibling of MXA-232\", \"mother of MXA-231 | mother of MXA-232\".",
+				"_required": "false"
+			},
+			{
+				"_group": "Organism",
+				"_name": "previousIdentifications",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/previousIdentifications",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#previousIdentifications",
+				"_dc:description": "A list (concatenated and separated) of previous assignments of names to the Occurrence. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"Chalepidae\", \"Pinus abies\", \"Anthus sp., field ID by G. Iglesias | Anthus correndera, expert ID by C. Cicero 2009-02-12 based on morphology\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Organism",
+				"_name": "organismRemarks",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/organismRemarks",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#organismRemarks",
+				"_dc:description": "Comments or notes about the Organism instance.",
+				"_examples": "\"One of a litter of six.\".",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "eventID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/eventID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#eventID",
+				"_dc:description": "An identifier for the set of information associated with an Event (something that occurs at a place and time). May be a global unique identifier or an identifier specific to the data set.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "parentEventID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/parentEventID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#parentEventID",
+				"_dc:description": "An event identifier for the super event which is composed of one or more sub-sampling events. The value must refer to an existing eventID. If the identifier is local it must exist within the given dataset. May be a globally unique identifier or an identifier specific to the data set.",
+				"_examples": "\"A1\" as parentEventID to identify the main Whittaker Plot in nested samples, each with its own eventID (e.g., \"A1:1\", \"A1:2\").",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "samplingProtocol",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/samplingProtocol",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#samplingProtocol",
+				"_dc:description": "The name of, reference to, or description of the method or protocol used during an Event.",
+				"_examples": "\"UV light trap\", \"mist net\", \"bottom trawl\", \"ad hoc observation\", \"point count\", \"Penguins from space: faecal stains reveal the location of emperor penguin colonies, http://dx.doi.org/10.1111/j.1466-8238.2009.00467.x\", \"Takats et al. 2001. Guidelines for Nocturnal Owl Monitoring in North America. Beaverhill Bird Observatory and Bird Studies Canada, Edmonton, Alberta. 32 pp.\", \"http://www.bsc-eoc.org/download/Owl.pdf\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "sampleSizeValue",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/sampleSizeValue",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#sampleSizeValue",
+				"_dc:description": "A numeric value for a measurement of the size (time duration, length, area, or volume) of a sample in a sampling event.",
+				"_examples": "A sampleSizeValue must have a corresponding sampleSizeUnit. Example: \"5\" for sampleSizeValue with \"metre\" for sampleSizeUnit.",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "sampleSizeUnit",
+				"_thesaurus": "http://rs.gbif.org/vocabulary/gbif/unit_of_measurement_2015-07-10.xml",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/sampleSizeUnit",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#sampleSizeUnit",
+				"_dc:description": "The unit of measurement of the size (time duration, length, area, or volume) of a sample in a sampling event.",
+				"_examples": "A sampleSizeUnit must have a corresponding sampleSizeValue, e.g., \"5\" for sampleSizeValue with \"metre\" for sampleSizeUnit. Examples: \"minute\", \"hour\", \"day\", \"metre\", \"square metre\", \"cubic metre\". Recommended best practice is to use a controlled vocabulary such as the Ontology of Units of Measure http://www.wurvoc.org/vocabularies/om-1.8/ of SI units, derived units, or other non-SI units accepted for use within the SI (e.g., minute, hour, day, litre).",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "samplingEffort",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/samplingEffort",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#samplingEffort",
+				"_dc:description": "The amount of effort expended during an Event.",
+				"_examples": "\"40 trap-nights\", \"10 observer-hours; 10 km by foot; 30 km by car\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "eventDate",
+				"_type": "date",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/eventDate",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#eventDate",
+				"_dc:description": "The date-time or interval during which an Event occurred. For occurrences, this is the date-time when the event was recorded. Not suitable for a time in a geological context. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E).",
+				"_examples": "\"1963-03-08T14:07-0600\" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, \"2009-02-20T08:40Z\" is 20 Feb 2009 8:40am UTC, \"1809-02-12\" is 12 Feb 1809, \"1906-06\" is Jun 1906, \"1971\" is just that year, \"2007-03-01T13:00:00Z/2008-05-11T15:30:00Z\" is the interval between 1 Mar 2007 1pm UTC and 11 May 2008 3:30pm UTC, \"2007-11-13/15\" is the interval between 13 Nov 2007 and 15 Nov 2007.",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "eventTime",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/eventTime",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#eventTime",
+				"_dc:description": "The time or interval during which an Event occurred. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E).",
+				"_examples": "\"14:07-0600\" is 2:07pm in the time zone six hours earlier than UTC, \"08:40:21Z\" is 8:40:21am UTC, \"13:00:00Z/15:30:00Z\" is the interval between 1pm UTC and 3:30pm UTC.",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "startDayOfYear",
+				"_type": "integer",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/startDayOfYear",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#startDayOfYear",
+				"_dc:description": "The earliest ordinal day of the year on which the Event occurred (1 for January 1, 365 for December 31, except in a leap year, in which case it is 366).",
+				"_examples": "\"1\" (=1 Jan), \"366\" (=31 Dec), \"365\" (=30 Dec in a leap year, 31 Dec in a non-leap year)",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "endDayOfYear",
+				"_type": "integer",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/endDayOfYear",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#endDayOfYear",
+				"_dc:description": "The latest ordinal day of the year on which the Event occurred (1 for January 1, 365 for December 31, except in a leap year, in which case it is 366).",
+				"_examples": "\"1\" (=1 Jan), \"366\" (=31 Dec), \"365\" (=30 Dec in a leap year, 31 Dec in a non-leap year)",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "year",
+				"_type": "integer",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/year",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#year",
+				"_dc:description": "The four-digit year in which the Event occurred, according to the Common Era Calendar.",
+				"_examples": "\"2008\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "month",
+				"_type": "integer",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/month",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#month",
+				"_dc:description": "The ordinal month in which the Event occurred.",
+				"_examples": "\"1\" (=January), \"10\" (=October)",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "day",
+				"_type": "integer",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/day",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#day",
+				"_dc:description": "The integer day of the month on which the Event occurred.",
+				"_examples": "\"9\", \"28\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "verbatimEventDate",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimEventDate",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimEventDate",
+				"_dc:description": "The verbatim original representation of the date and time information for an Event.",
+				"_examples": "\"spring 1910\", \"Marzo 2002\", \"1999-03-XX\", \"17IV1934\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "habitat",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/habitat",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#habitat",
+				"_dc:description": "A category or description of the habitat in which the Event occurred.",
+				"_examples": "\"oak savanna\", \"pre-cordilleran steppe\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "fieldNumber",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/fieldNumber",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#fieldNumber",
+				"_dc:description": "An identifier given to the event in the field. Often serves as a link between field notes and the Event.",
+				"_examples": "\"RV Sol 87-03-08\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "fieldNotes",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/fieldNotes",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#fieldNotes",
+				"_dc:description": "One of a) an indicator of the existence of, b) a reference to (publication, URI), or c) the text of notes taken in the field about the Event.",
+				"_examples": "\"notes available in Grinnell-Miller Library\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Event",
+				"_name": "eventRemarks",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/eventRemarks",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#eventRemarks",
+				"_dc:description": "Comments or notes about the Event.",
+				"_examples": "\"after the recent rains the river is nearly at flood stage\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "locationID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/locationID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#locationID",
+				"_dc:description": "An identifier for the set of location information (data associated with dcterms:Location). May be a global unique identifier or an identifier specific to the data set.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "higherGeographyID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/higherGeographyID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#higherGeographyID",
+				"_dc:description": "An identifier for the geographic region within which the Location occurred. Recommended best practice is to use an persistent identifier from a controlled vocabulary such as the Getty Thesaurus of Geographic Names.",
+				"_examples": "\"TGN: 1002002\" for Prov. Tierra del Fuego, Argentina",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "higherGeography",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/higherGeography",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#higherGeography",
+				"_dc:description": "A list (concatenated and separated) of geographic names less specific than the information captured in the locality term. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"South America | Argentina | Patagonia | Parque Nacional Nahuel Huapi | Neuquén | Los Lagos\" with accompanying values \"South America\" in Continent, \"Argentina\" in Country, \"Neuquén\" in StateProvince, and Los Lagos in County.",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "continent",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/continent",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#continent",
+				"_dc:description": "The name of the continent in which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names or the ISO 3166 Continent code.",
+				"_examples": "\"Antarctica\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "waterBody",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/waterBody",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#waterBody",
+				"_dc:description": "The name of the water body in which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names.",
+				"_examples": "\"Indian Ocean\", \"Baltic Sea\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "islandGroup",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/islandGroup",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#islandGroup",
+				"_dc:description": "The name of the island group in which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names.",
+				"_examples": "\"Alexander Archipelago\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "island",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/island",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#island",
+				"_dc:description": "The name of the island on or near which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names.",
+				"_examples": "\"Isla Victoria\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "country",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/country",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#country",
+				"_dc:description": "The name of the country or major administrative unit in which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names.",
+				"_examples": "\"Denmark\", \"Colombia\", \"España\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "countryCode",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/countryCode",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#countryCode",
+				"_dc:description": "The standard code for the country in which the Location occurs. Recommended best practice is to use ISO 3166-1-alpha-2 country codes.",
+				"_examples": "\"AR\" for Argentina, \"SV\" for El Salvador",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "stateProvince",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/stateProvince",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#stateProvince",
+				"_dc:description": "The name of the next smaller administrative region than country (state, province, canton, department, region, etc.) in which the Location occurs.",
+				"_examples": "\"Montana\", \"Minas Gerais\", \"Córdoba\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "county",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/county",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#county",
+				"_dc:description": "The full, unabbreviated name of the next smaller administrative region than stateProvince (county, shire, department, etc.) in which the Location occurs.",
+				"_examples": "\"Missoula\", \"Los Lagos\", \"Mataró\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "municipality",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/municipality",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#municipality",
+				"_dc:description": "The full, unabbreviated name of the next smaller administrative region than county (city, municipality, etc.) in which the Location occurs. Do not use this term for a nearby named place that does not contain the actual location.",
+				"_examples": "\"Holzminden\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "locality",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/locality",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#locality",
+				"_dc:description": "The specific description of the place. Less specific geographic information can be provided in other geographic terms (higherGeography, continent, country, stateProvince, county, municipality, waterBody, island, islandGroup). This term may contain information modified from the original to correct perceived errors or standardize the description.",
+				"_examples": "\"Bariloche, 25 km NNE via Ruta Nacional 40 (=Ruta 237)\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "verbatimLocality",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimLocality",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimLocality",
+				"_dc:description": "The original textual description of the place.",
+				"_examples": "\"25 km NNE Bariloche por R. Nac. 237\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "verbatimElevation",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimElevation",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimElevation",
+				"_dc:description": "The original description of the elevation (altitude, usually above sea level) of the Location.",
+				"_examples": "\"100-200 m\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "minimumElevationInMeters",
+				"_type": "decimal",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/minimumElevationInMeters",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#minimumElevationInMeters",
+				"_dc:description": "The lower limit of the range of elevation (altitude, usually above sea level), in meters.",
+				"_examples": "\"100\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "maximumElevationInMeters",
+				"_type": "decimal",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/maximumElevationInMeters",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#maximumElevationInMeters",
+				"_dc:description": "The upper limit of the range of elevation (altitude, usually above sea level), in meters.",
+				"_examples": "\"200\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "verbatimDepth",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimDepth",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimDepth",
+				"_dc:description": "The original description of the depth below the local surface.",
+				"_examples": "\"100-200 m\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "minimumDepthInMeters",
+				"_type": "decimal",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/minimumDepthInMeters",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#minimumDepthInMeters",
+				"_dc:description": "The lesser depth of a range of depth below the local surface, in meters.",
+				"_examples": "\"100\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "maximumDepthInMeters",
+				"_type": "decimal",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/maximumDepthInMeters",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#maximumDepthInMeters",
+				"_dc:description": "The greater depth of a range of depth below the local surface, in meters.",
+				"_examples": "\"200\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "minimumDistanceAboveSurfaceInMeters",
+				"_type": "decimal",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/minimumDistanceAboveSurfaceInMeters",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#minimumDistanceAboveSurfaceInMeters",
+				"_dc:description": "The lesser distance in a range of distance from a reference surface in the vertical direction, in meters. Use positive values for locations above the surface, negative values for locations below. If depth measures are given, the reference surface is the location given by the depth, otherwise the reference surface is the location given by the elevation.",
+				"_examples": "1.5 meter sediment core from the bottom of a lake (at depth 20m) at 300m elevation; VerbatimElevation: \"300m\" MinimumElevationInMeters: \"300\", MaximumElevationInMeters: \"300\", VerbatimDepth: \"20m\", MinimumDepthInMeters: \"20\", MaximumDepthInMeters: \"20\", minimumDistanceAboveSurfaceInMeters: \"0\", maximumDistanceAboveSurfaceInMeters: \"-1.5\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "maximumDistanceAboveSurfaceInMeters",
+				"_type": "decimal",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/maximumDistanceAboveSurfaceInMeters",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#maximumDistanceAboveSurfaceInMeters",
+				"_dc:description": "The greater distance in a range of distance from a reference surface in the vertical direction, in meters. Use positive values for locations above the surface, negative values for locations below. If depth measures are given, the reference surface is the location given by the depth, otherwise the reference surface is the location given by the elevation.",
+				"_examples": "1.5 meter sediment core from the bottom of a lake (at depth 20m) at 300m elevation; VerbatimElevation: \"300m\" MinimumElevationInMeters: \"300\", MaximumElevationInMeters: \"300\", VerbatimDepth: \"20m\", MinimumDepthInMeters: \"20\", MaximumDepthInMeters: \"20\", minimumDistanceAboveSurfaceInMeters: \"0\", maximumDistanceAboveSurfaceInMeters: \"-1.5\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "locationAccordingTo",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/locationAccordingTo",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#locationAccordingTo",
+				"_dc:description": "Information about the source of this Location information. Could be a publication (gazetteer), institution, or team of individuals.",
+				"_examples": "\"Getty Thesaurus of Geographic Names\", \"GADM\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "locationRemarks",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/locationRemarks",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#locationRemarks",
+				"_dc:description": "Comments or notes about the Location.",
+				"_examples": "\"under water since 2005\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "verbatimCoordinates",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimCoordinates",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimCoordinates",
+				"_dc:description": "The verbatim original spatial coordinates of the Location. The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem.",
+				"_examples": "\"41 05 54S 121 05 34W\", \"17T 630000 4833400\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "verbatimLatitude",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimLatitude",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimLatitude",
+				"_dc:description": "The verbatim original latitude of the Location. The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem.",
+				"_examples": "\"41 05 54.03S\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "verbatimLongitude",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimLongitude",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimLongitude",
+				"_dc:description": "The verbatim original longitude of the Location. The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem.",
+				"_examples": "\"121d 10' 34\" W\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "verbatimCoordinateSystem",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimCoordinateSystem",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimCoordinateSystem",
+				"_dc:description": "The spatial coordinate system for the verbatimLatitude and verbatimLongitude or the verbatimCoordinates of the Location. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"decimal degrees\", \"degrees decimal minutes\", \"degrees minutes seconds\", \"UTM\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "verbatimSRS",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimSRS",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimSRS",
+				"_dc:description": "The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which coordinates given in verbatimLatitude and verbatimLongitude, or verbatimCoordinates are based. Recommended best practice is use the EPSG code as a controlled vocabulary to provide an SRS, if known. Otherwise use a controlled vocabulary for the name or code of the geodetic datum, if known. Otherwise use a controlled vocabulary for the name or code of the ellipsoid, if known. If none of these is known, use the value \"unknown\".",
+				"_examples": "\"EPSG:4326\", \"WGS84\", \"NAD27\", \"Campo Inchauspe\", \"European 1950\", \"Clarke 1866\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "decimalLatitude",
+				"_type": "decimal",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/decimalLatitude",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#decimalLatitude",
+				"_dc:description": "The geographic latitude (in decimal degrees, using the spatial reference system given in geodeticDatum) of the geographic center of a Location. Positive values are north of the Equator, negative values are south of it. Legal values lie between -90 and 90, inclusive.",
+				"_examples": "\"-41.0983423\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "decimalLongitude",
+				"_type": "decimal",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/decimalLongitude",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#decimalLongitude",
+				"_dc:description": "The geographic longitude (in decimal degrees, using the spatial reference system given in geodeticDatum) of the geographic center of a Location. Positive values are east of the Greenwich Meridian, negative values are west of it. Legal values lie between -180 and 180, inclusive.",
+				"_examples": "\"-121.1761111\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "geodeticDatum",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/geodeticDatum",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#geodeticDatum",
+				"_dc:description": "The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which the geographic coordinates given in decimalLatitude and decimalLongitude as based. Recommended best practice is use the EPSG code as a controlled vocabulary to provide an SRS, if known. Otherwise use a controlled vocabulary for the name or code of the geodetic datum, if known. Otherwise use a controlled vocabulary for the name or code of the ellipsoid, if known. If none of these is known, use the value \"unknown\".",
+				"_examples": "\"EPSG:4326\", \"WGS84\", \"NAD27\", \"Campo Inchauspe\", \"European 1950\", \"Clarke 1866\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "coordinateUncertaintyInMeters",
+				"_type": "decimal",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#coordinateUncertaintyInMeters",
+				"_dc:description": "The horizontal distance (in meters) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (because there are no coordinates). Zero is not a valid value for this term.",
+				"_examples": "\"30\" (reasonable lower limit of a GPS reading under good conditions if the actual precision was not recorded at the time), \"71\" (uncertainty for a UTM coordinate having 100 meter precision and a known spatial reference system).",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "coordinatePrecision",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/coordinatePrecision",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#coordinatePrecision",
+				"_dc:description": "A decimal representation of the precision of the coordinates given in the decimalLatitude and decimalLongitude.",
+				"_examples": "\"0.00001\" (normal GPS limit for decimal degrees), \"0.000278\" (nearest second), \"0.01667\" (nearest minute), \"1.0\" (nearest degree)",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "pointRadiusSpatialFit",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/pointRadiusSpatialFit",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#pointRadiusSpatialFit",
+				"_dc:description": "The ratio of the area of the point-radius (decimalLatitude, decimalLongitude, coordinateUncertaintyInMeters) to the area of the true (original, or most specific) spatial representation of the Location. Legal values are 0, greater than or equal to 1, or undefined. A value of 1 is an exact match or 100% overlap. A value of 0 should be used if the given point-radius does not completely contain the original representation. The pointRadiusSpatialFit is undefined (and should be left blank) if the original representation is a point without uncertainty and the given georeference is not that same point (without uncertainty). If both the original and the given georeference are the same point, the pointRadiusSpatialFit is 1.",
+				"_examples": "Detailed explanations with graphical examples can be found in the \"Guide to Best Practices for Georeferencing\", Chapman and Wieczorek, eds. 2006 (http://www.gbif.org/prog/digit/Georeferencing).",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "footprintWKT",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/footprintWKT",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#footprintWKT",
+				"_dc:description": "A Well-Known Text (WKT) representation of the shape (footprint, geometry) that defines the Location. A Location may have both a point-radius representation (see decimalLatitude) and a footprint representation, and they may differ from each other.",
+				"_examples": "the one-degree bounding box with opposite corners at (longitude=10, latitude=20) and (longitude=11, latitude=21) would be expressed in well-known text as POLYGON ((10 20, 11 20, 11 21, 10 21, 10 20))",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "footprintSRS",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/footprintSRS",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#footprintSRS",
+				"_dc:description": "A Well-Known Text (WKT) representation of the Spatial Reference System (SRS) for the footprintWKT of the Location. Do not use this term to describe the SRS of the decimalLatitude and decimalLongitude, even if it is the same as for the footprintWKT - use the geodeticDatum instead.",
+				"_examples": "The WKT for the standard WGS84 SRS (EPSG:4326) is \"GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.0174532925199433]]\" without the enclosing quotes.",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "footprintSpatialFit",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/footprintSpatialFit",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#footprintSpatialFit",
+				"_dc:description": "The ratio of the area of the footprint (footprintWKT) to the area of the true (original, or most specific) spatial representation of the Location. Legal values are 0, greater than or equal to 1, or undefined. A value of 1 is an exact match or 100% overlap. A value of 0 should be used if the given footprint does not completely contain the original representation. The footprintSpatialFit is undefined (and should be left blank) if the original representation is a point and the given georeference is not that same point. If both the original and the given georeference are the same point, the footprintSpatialFit is 1.",
+				"_examples": "Detailed explanations with graphical examples can be found in the \"Guide to Best Practices for Georeferencing\", Chapman and Wieczorek, eds. 2006 (http://www.gbif.org/prog/digit/Georeferencing).",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "georeferencedBy",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/georeferencedBy",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#georeferencedBy",
+				"_dc:description": "A list (concatenated and separated) of names of people, groups, or organizations who determined the georeference (spatial representation) the Location. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"Kristina Yamamoto (MVZ) | Janet Fang (MVZ)\", \"Brad Millen (ROM)\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "georeferencedDate",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/georeferencedDate",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#georeferencedDate",
+				"_dc:description": "The date on which the Location was georeferenced. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E).",
+				"_examples": "\"1963-03-08\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "georeferenceProtocol",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/georeferenceProtocol",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#georeferenceProtocol",
+				"_dc:description": "A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties.",
+				"_examples": "\"Guide to Best Practices for Georeferencing\" (Chapman and Wieczorek, eds. 2006), \"MaNIS/HerpNet/ORNIS Georeferencing Guidelines\", \"BioGeomancer\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "georeferenceSources",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/georeferenceSources",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#georeferenceSources",
+				"_dc:description": "A list (concatenated and separated) of maps, gazetteers, or other resources used to georeference the Location, described specifically enough to allow anyone in the future to use the same resources. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"USGS 1:24000 Florence Montana Quad | Terrametrics 2008 on Google Earth\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "georeferenceVerificationStatus",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/georeferenceVerificationStatus",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#georeferenceVerificationStatus",
+				"_dc:description": "A categorical description of the extent to which the georeference has been verified to represent the best possible spatial description. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"requires verification\", \"verified by collector\", \"verified by curator\".",
+				"_required": "false"
+			},
+			{
+				"_group": "Location",
+				"_name": "georeferenceRemarks",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/georeferenceRemarks",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#georeferenceRemarks",
+				"_dc:description": "Notes or comments about the spatial description determination, explaining assumptions made in addition or opposition to the those formalized in the method referred to in georeferenceProtocol.",
+				"_examples": "\"assumed distance by road (Hwy. 101)\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "geologicalContextID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/geologicalContextID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#geologicalContextID",
+				"_dc:description": "An identifier for the set of information associated with a GeologicalContext (the location within a geological context, such as stratigraphy). May be a global unique identifier or an identifier specific to the data set.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "earliestEonOrLowestEonothem",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/earliestEonOrLowestEonothem",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#earliestEonOrLowestEonothem",
+				"_dc:description": "The full name of the earliest possible geochronologic eon or lowest chrono-stratigraphic eonothem or the informal name (\"Precambrian\") attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Phanerozoic\", \"Proterozoic\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "latestEonOrHighestEonothem",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/latestEonOrHighestEonothem",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#latestEonOrHighestEonothem",
+				"_dc:description": "The full name of the latest possible geochronologic eon or highest chrono-stratigraphic eonothem or the informal name (\"Precambrian\") attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Phanerozoic\", \"Proterozoic\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "earliestEraOrLowestErathem",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/earliestEraOrLowestErathem",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#earliestEraOrLowestErathem",
+				"_dc:description": "The full name of the earliest possible geochronologic era or lowest chronostratigraphic erathem attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Cenozoic\", \"Mesozoic\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "latestEraOrHighestErathem",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/latestEraOrHighestErathem",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#latestEraOrHighestErathem",
+				"_dc:description": "The full name of the latest possible geochronologic era or highest chronostratigraphic erathem attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Cenozoic\", \"Mesozoic\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "earliestPeriodOrLowestSystem",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/earliestPeriodOrLowestSystem",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#earliestPeriodOrLowestSystem",
+				"_dc:description": "The full name of the earliest possible geochronologic period or lowest chronostratigraphic system attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Neogene\", \"Tertiary\", \"Quaternary\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "latestPeriodOrHighestSystem",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/latestPeriodOrHighestSystem",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#latestPeriodOrHighestSystem",
+				"_dc:description": "The full name of the latest possible geochronologic period or highest chronostratigraphic system attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Neogene\", \"Tertiary\", \"Quaternary\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "earliestEpochOrLowestSeries",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/earliestEpochOrLowestSeries",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#earliestEpochOrLowestSeries",
+				"_dc:description": "The full name of the earliest possible geochronologic epoch or lowest chronostratigraphic series attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Holocene\", \"Pleistocene\", \"Ibexian Series\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "latestEpochOrHighestSeries",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/latestEpochOrHighestSeries",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#latestEpochOrHighestSeries",
+				"_dc:description": "The full name of the latest possible geochronologic epoch or highest chronostratigraphic series attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Holocene\", \"Pleistocene\", \"Ibexian Series\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "earliestAgeOrLowestStage",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/earliestAgeOrLowestStage",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#earliestAgeOrLowestStage",
+				"_dc:description": "The full name of the earliest possible geochronologic age or lowest chronostratigraphic stage attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Atlantic\", \"Boreal\", \"Skullrockian\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "latestAgeOrHighestStage",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/latestAgeOrHighestStage",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#latestAgeOrHighestStage",
+				"_dc:description": "The full name of the latest possible geochronologic age or highest chronostratigraphic stage attributable to the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "\"Atlantic\", \"Boreal\", \"Skullrockian\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "lowestBiostratigraphicZone",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/lowestBiostratigraphicZone",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#lowestBiostratigraphicZone",
+				"_dc:description": "The full name of the lowest possible geological biostratigraphic zone of the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "highestBiostratigraphicZone",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/highestBiostratigraphicZone",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#highestBiostratigraphicZone",
+				"_dc:description": "The full name of the highest possible geological biostratigraphic zone of the stratigraphic horizon from which the cataloged item was collected.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "lithostratigraphicTerms",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/lithostratigraphicTerms",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#lithostratigraphicTerms",
+				"_dc:description": "The combination of all litho-stratigraphic names for the rock from which the cataloged item was collected.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "group",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/group",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#group",
+				"_dc:description": "The full name of the lithostratigraphic group from which the cataloged item was collected.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "formation",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/formation",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#formation",
+				"_dc:description": "The full name of the lithostratigraphic formation from which the cataloged item was collected.",
+				"_examples": "\"Notch Peak Fromation\", \"House Limestone\", \"Fillmore Formation\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "member",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/member",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#member",
+				"_dc:description": "The full name of the lithostratigraphic member from which the cataloged item was collected.",
+				"_examples": "\"Lava Dam Member\", \"Hellnmaria Member\"",
+				"_required": "false"
+			},
+			{
+				"_group": "GeologicalContext",
+				"_name": "bed",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/bed",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#bed",
+				"_dc:description": "The full name of the lithostratigraphic bed from which the cataloged item was collected.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "Identification",
+				"_name": "identificationID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/identificationID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#identificationID",
+				"_dc:description": "An identifier for the Identification (the body of information associated with the assignment of a scientific name). May be a global unique identifier or an identifier specific to the data set.",
+				"_examples": "",
+				"_required": "false"
+			},
+			{
+				"_group": "Identification",
+				"_name": "identifiedBy",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/identifiedBy",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#identifiedBy",
+				"_dc:description": "A list (concatenated and separated) of names of people, groups, or organizations who assigned the Taxon to the subject. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"James L. Patton\", \"Theodore Pappenfuss | Robert Macey\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Identification",
+				"_name": "identifiedByID",
+				"_namespace": "http://rs.gbif.org/terms/1.0/",
+				"_qualName": "http://rs.gbif.org/terms/1.0/identifiedByID",
+				"_dc:description": "An unordered list (concatenated and separated) of IDs representing names of people, groups, or organizations who assigned the Taxon to the subject. No semantics should be assumed, including for example an ordering of identifiers to citation priority or any institutional affiliation. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"https://orcid.org/0000-0001-6215-3617 | https://orcid.org/0000-0003-1691-239X\" \"https://orcid.org/0000-0001-6215-3617 | https://www.wikidata.org/entity/Q28913658\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Identification",
+				"_name": "dateIdentified",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/dateIdentified",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#dateIdentified",
+				"_dc:description": "The date on which the subject was identified as representing the Taxon. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E).",
+				"_examples": "\"1963-03-08T14:07-0600\" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, \"2009-02-20T08:40Z\" is 20 Feb 2009 8:40am UTC, \"1809-02-12\" is 12 Feb 1809, \"1906-06\" is Jun 1906, \"1971\" is just that year, \"2007-03-01T13:00:00Z/2008-05-11T15:30:00Z\" is the interval between 1 Mar 2007 1pm UTC and 11 May 2008 3:30pm UTC, \"2007-11-13/15\" is the interval between 13 Nov 2007 and 15 Nov 2007.",
+				"_required": "false"
+			},
+			{
+				"_group": "Identification",
+				"_name": "identificationReferences",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/identificationReferences",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#identificationReferences",
+				"_dc:description": "A list (concatenated and separated) of references (publication, global unique identifier, URI) used in the Identification. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"Aves del Noroeste Patagonico. Christie et al. 2004.\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Identification",
+				"_name": "identificationRemarks",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/identificationRemarks",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#identificationRemarks",
+				"_dc:description": "Comments or notes about the Identification.",
+				"_examples": "\"Distinguished between Anthus correndera and Anthus hellmayri based on the comparative lengths of the uñas.\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Identification",
+				"_name": "identificationQualifier",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/identificationQualifier",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#identificationQualifier",
+				"_dc:description": "A brief phrase or a standard term (\"cf.\", \"aff.\") to express the determiner's doubts about the Identification.",
+				"_examples": "1) For the determination \"Quercus aff. agrifolia var. oxyadenia\", identificationQualifier would be \"aff. agrifolia var. oxyadenia\" with accompanying values \"Quercus\" in genus, \"agrifolia\" in specificEpithet, \"oxyadenia\" in infraspecificEpithet, and \"var.\" in rank. 2) For the determination \"Quercus agrifolia cf. var. oxyadenia\", identificationQualifier would be \"cf. var. oxyadenia \" with accompanying values \"Quercus\" in genus, \"agrifolia\" in specificEpithet, \"oxyadenia\" in infraspecificEpithet, and \"var.\" in rank.",
+				"_required": "false"
+			},
+			{
+				"_group": "Identification",
+				"_name": "identificationVerificationStatus",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/identificationVerificationStatus",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#identificationVerificationStatus",
+				"_dc:description": "A categorical indicator of the extent to which the taxonomic identification has been verified to be correct. Recommended best practice is to use a controlled vocabulary such as that used in HISPID/ABCD.",
+				"_examples": "\"0\", \"4\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Identification",
+				"_name": "typeStatus",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/typeStatus",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#typeStatus",
+				"_dc:description": "A list (concatenated and separated) of nomenclatural types (type status, typified scientific name, publication) applied to the subject. The recommended best practice is to separate the values with a vertical bar (' | ').",
+				"_examples": "\"holotype of Ctenomys sociabilis. Pearson O. P., and M. I. Christie. 1985. Historia Natural, 5(37):388\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "taxonID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/taxonID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#taxonID",
+				"_dc:description": "An identifier for the set of taxon information (data associated with the Taxon class). May be a global unique identifier or an identifier specific to the data set.",
+				"_examples": "\"8fa58e08-08de-4ac1-b69c-1235340b7001\", \"32567\", \"http://species.gbif.org/abies_alba_1753\", \"urn:lsid:gbif.org:usages:32567\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "scientificNameID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/scientificNameID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#scientificNameID",
+				"_dc:description": "An identifier for the nomenclatural (not taxonomic) details of a scientific name.",
+				"_examples": "\"urn:lsid:ipni.org:names:37829-1:1.3\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "acceptedNameUsageID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/acceptedNameUsageID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#acceptedNameUsageID",
+				"_dc:description": "An identifier for the name usage (documented meaning of the name according to a source) of the currently valid (zoological) or accepted (botanical) taxon.",
+				"_examples": "\"8fa58e08-08de-4ac1-b69c-1235340b7001\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "parentNameUsageID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/parentNameUsageID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#parentNameUsageID",
+				"_dc:description": "An identifier for the name usage (documented meaning of the name according to a source) of the direct, most proximate higher-rank parent taxon (in a classification) of the most specific element of the scientificName.",
+				"_examples": "\"8fa58e08-08de-4ac1-b69c-1235340b7001\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "originalNameUsageID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/originalNameUsageID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#originalNameUsageID",
+				"_dc:description": "An identifier for the name usage (documented meaning of the name according to a source) in which the terminal element of the scientificName was originally established under the rules of the associated nomenclaturalCode.",
+				"_examples": "\"http://species.gbif.org/abies_alba_1753\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "nameAccordingToID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/nameAccordingToID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#nameAccordingToID",
+				"_dc:description": "An identifier for the source in which the specific taxon concept circumscription is defined or implied. See nameAccordingTo.",
+				"_examples": "\"doi:10.1016/S0269-915X(97)80026-2\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "namePublishedInID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/namePublishedInID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#namePublishedInID",
+				"_dc:description": "An identifier for the publication in which the scientificName was originally established under the rules of the associated nomenclaturalCode.",
+				"_examples": "\"http://hdl.handle.net/10199/7\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "taxonConceptID",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/taxonConceptID",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#taxonConceptID",
+				"_dc:description": "An identifier for the taxonomic concept to which the record refers - not for the nomenclatural details of a taxon.",
+				"_examples": "\"8fa58e08-08de-4ac1-b69c-1235340b7001\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "scientificName",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/scientificName",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#scientificName",
+				"_dc:description": "The full scientific name, with authorship and date information if known. When forming part of an Identification, this should be the name in lowest level taxonomic rank that can be determined. This term should not contain identification qualifications, which should instead be supplied in the IdentificationQualifier term.",
+				"_examples": "\"Coleoptera\" (order), \"Vespertilionidae\" (family), \"Manis\" (genus), \"Ctenomys sociabilis\" (genus + specificEpithet), \"Ambystoma tigrinum diaboli\" (genus + specificEpithet + infraspecificEpithet), \"Roptrocerus typographi (Györfi, 1952)\" (genus + specificEpithet + scientificNameAuthorship), \"Quercus agrifolia var. oxyadenia (Torr.) J.T. Howell\" (genus + specificEpithet + taxonRank + infraspecificEpithet + scientificNameAuthorship)",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "acceptedNameUsage",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/acceptedNameUsage",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#acceptedNameUsage",
+				"_dc:description": "The full name, with authorship and date information if known, of the currently valid (zoological) or accepted (botanical) taxon.",
+				"_examples": "\"Tamias minimus\" valid name for \"Eutamias minimus\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "parentNameUsage",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/parentNameUsage",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#parentNameUsage",
+				"_dc:description": "The full name, with authorship and date information if known, of the direct, most proximate higher-rank parent taxon (in a classification) of the most specific element of the scientificName.",
+				"_examples": "\"Rubiaceae\", \"Gruiformes\", \"Testudinae\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "originalNameUsage",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/originalNameUsage",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#originalNameUsage",
+				"_dc:description": "The taxon name, with authorship and date information if known, as it originally appeared when first established under the rules of the associated nomenclaturalCode. The basionym (botany) or basonym (bacteriology) of the scientificName or the senior/earlier homonym for replaced names.",
+				"_examples": "\"Pinus abies\", \"Gasterosteus saltatrix Linnaeus 1768\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "nameAccordingTo",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/nameAccordingTo",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#nameAccordingTo",
+				"_dc:description": "The reference to the source in which the specific taxon concept circumscription is defined or implied - traditionally signified by the Latin \"sensu\" or \"sec.\" (from secundum, meaning \"according to\"). For taxa that result from identifications, a reference to the keys, monographs, experts and other sources should be given.",
+				"_examples": "\"McCranie, J. R., D. B. Wake, and L. D. Wilson. 1996. The taxonomic status of Bolitoglossa schmidti, with comments on the biology of the Mesoamerican salamander Bolitoglossa dofleini (Caudata: Plethodontidae). Carib. J. Sci. 32:395-398.\", \"Werner Greuter 2008\", \"Lilljeborg 1861, Upsala Univ. Arsskrift, Math. Naturvet., pp. 4, 5\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "namePublishedIn",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/namePublishedIn",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#namePublishedIn",
+				"_dc:description": "A reference for the publication in which the scientificName was originally established under the rules of the associated nomenclaturalCode.",
+				"_examples": "\"Pearson O. P., and M. I. Christie. 1985. Historia Natural, 5(37):388\", \"Forel, Auguste, Diagnosies provisoires de quelques espèces nouvelles de fourmis de Madagascar, récoltées par M. Grandidier., Annales de la Societe Entomologique de Belgique, Comptes-rendus des Seances 30, 1886\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "namePublishedInYear",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/namePublishedInYear",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#namePublishedInYear",
+				"_dc:description": "The four-digit year in which the scientificName was published.",
+				"_examples": "\"1915\"",
+				"_type": "integer",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "higherClassification",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/higherClassification",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#higherClassification",
+				"_dc:description": "A list (concatenated and separated) of taxa names terminating at the rank immediately superior to the taxon referenced in the taxon record. Recommended best practice is to order the list starting with the highest rank and separating the names for each rank with a vertical bar (' | ')..",
+				"_examples": "\"Animalia | Chordata | Vertebrata | Mammalia | Theria | Eutheria | Rodentia | Hystricognatha | Hystricognathi | Ctenomyidae | Ctenomyini | Ctenomys\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "kingdom",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/kingdom",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#kingdom",
+				"_dc:description": "The full scientific name of the kingdom in which the taxon is classified.",
+				"_examples": "\"Animalia\", \"Plantae\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "phylum",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/phylum",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#phylum",
+				"_dc:description": "The full scientific name of the phylum or division in which the taxon is classified.",
+				"_examples": "\"Chordata\" (phylum), \"Bryophyta\" (division)",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "class",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/class",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#class",
+				"_dc:description": "The full scientific name of the class in which the taxon is classified.",
+				"_examples": "\"Mammalia\", \"Hepaticopsida\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "order",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/order",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#order",
+				"_dc:description": "The full scientific name of the order in which the taxon is classified.",
+				"_examples": "\"Carnivora\", \"Monocleales\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "family",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/family",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#family",
+				"_dc:description": "The full scientific name of the family in which the taxon is classified.",
+				"_examples": "\"Felidae\", \"Monocleaceae\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "genus",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/genus",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#genus",
+				"_dc:description": "The full scientific name of the genus in which the taxon is classified.",
+				"_examples": "\"Puma\", \"Monoclea\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "subgenus",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/subgenus",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#subgenus",
+				"_dc:description": "The full scientific name of the subgenus in which the taxon is classified. Values should include the genus to avoid homonym confusion.",
+				"_examples": "\"Strobus (Pinus)\", \"Puma (Puma)\", \"Loligo (Amerigo)\", \"Hieracium subgen. Pilosella\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "specificEpithet",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/specificEpithet",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#specificEpithet",
+				"_dc:description": "The name of the first or species epithet of the scientificName.",
+				"_examples": "\"concolor\", \"gottschei\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "infraspecificEpithet",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/infraspecificEpithet",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#infraspecificEpithet",
+				"_dc:description": "The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.",
+				"_examples": "\"concolor\", \"oxyadenia\", \"sayi\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "taxonRank",
+				"_thesaurus": "http://rs.gbif.org/vocabulary/gbif/rank_2015-04-24.xml",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/taxonRank",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#taxonRank",
+				"_dc:description": "The taxonomic rank of the most specific name in the scientificName. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"subspecies\", \"varietas\", \"forma\", \"species\", \"genus\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "verbatimTaxonRank",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/verbatimTaxonRank",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#verbatimTaxonRank",
+				"_dc:description": "The taxonomic rank of the most specific name in the scientificName as it appears in the original record.",
+				"_examples": "\"Agamospecies\", \"sub-lesus\", \"prole\", \"apomict\", \"nothogrex\", \"sp.\", \"subsp.\", \"var.\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "scientificNameAuthorship",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/scientificNameAuthorship",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#scientificNameAuthorship",
+				"_dc:description": "The authorship information for the scientificName formatted according to the conventions of the applicable nomenclaturalCode.",
+				"_examples": "\"(Torr.) J.T. Howell\", \"(Martinovský) Tzvelev\", \"(Györfi, 1952)\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "vernacularName",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/vernacularName",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#vernacularName",
+				"_dc:description": "A common or vernacular name.",
+				"_examples": "\"Andean Condor\", \"Condor Andino\", \"American Eagle\", \"Gänsegeier\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "nomenclaturalCode",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/nomenclaturalCode",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#nomenclaturalCode",
+				"_dc:description": "The nomenclatural code (or codes in the case of an ambiregnal name) under which the scientificName is constructed. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"ICBN\", \"ICZN\", \"BC\", \"ICNCP\", \"BioCode\", \"ICZN; ICBN\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "taxonomicStatus",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/taxonomicStatus",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#taxonomicStatus",
+				"_dc:description": "The status of the use of the scientificName as a label for a taxon. Requires taxonomic opinion to define the scope of a taxon. Rules of priority then are used to define the taxonomic status of the nomenclature contained in that scope, combined with the experts opinion. It must be linked to a specific taxonomic reference that defines the concept. Recommended best practice is to use a controlled vocabulary.",
+				"_examples": "\"invalid\", \"misapplied\", \"homotypic synonym\", \"accepted\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "nomenclaturalStatus",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/nomenclaturalStatus",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#nomenclaturalStatus",
+				"_dc:description": "The status related to the original publication of the name and its conformance to the relevant rules of nomenclature. It is based essentially on an algorithm according to the business rules of the code.  It requires no taxonomic opinion.",
+				"_examples": "\"nom. ambig.\", \"nom. illeg.\", \"nom. subnud.\"",
+				"_required": "false"
+			},
+			{
+				"_group": "Taxon",
+				"_name": "taxonRemarks",
+				"_namespace": "http://rs.tdwg.org/dwc/terms/",
+				"_qualName": "http://rs.tdwg.org/dwc/terms/taxonRemarks",
+				"_dc:relation": "http://rs.tdwg.org/dwc/terms/index.htm#taxonRemarks",
+				"_dc:description": "Comments or notes about the taxon or name.",
+				"_examples": "\"this name is a misspelling in common use\"",
+				"_required": "false"
+			}
+];
