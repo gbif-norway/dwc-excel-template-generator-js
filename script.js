@@ -74,6 +74,13 @@ const generateXLSX = async() => {
         cell.style = {font: {bold: true}, fill: {type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFAA'}}};
     };
 
+    if(document.getElementById('measurementorfactcheck').checked) {
+        const mofworksheet = workbook.addWorksheet('MeasurementOrFacts');
+        mof = ["measurementID", "measurementType", "measurementValue", "measurementAccuracy", "measurementUnit", "measurementDeterminedBy", "measurementDeterminedDate", "measurementMethod"];
+        mofworksheet.columns = mof.map(column => ({'header': column, 'width': column.length}));
+        //mofworksheet.columns = [{'header': "measurementID"}, {'header': "measurementType"}];
+    }
+
     workbook.xlsx.writeBuffer()
       .then(buffer => saveAs(new Blob([buffer]), `${Date.now()}_feedback.xlsx`))
       .catch(err => console.log('Error writing excel export', err))
