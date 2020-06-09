@@ -1,4 +1,4 @@
-var occurrence_terms = [
+var occurrenceTerms = [
 			{
 				"_group": "Record-level",
 				"_name": "type",

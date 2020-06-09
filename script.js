@@ -3,12 +3,10 @@ const dwcTranslationsObj = dwcTranslations.reduce(function(obj, item) {
     return obj;
 })
 
-const recommendedTerms = term_versions.filter(function(item) { return item['status'] == 'recommended' && item['organized_in'] != ''; })
-
-const dwcTerms = recommendedTerms.reduce(function(obj, item) { /* Merges terms + translations, and organises */
-    const termName = item['term_iri'].split('/').pop();
+const dwcTerms = occurrenceTerms.reduce(function(obj, item) { /* Merges terms + translations, and organises */
+    const termName = item['_name'];
     const allElements = {...item, ...dwcTranslationsObj[termName]}
-    const org = item['organized_in'].replace(/\/$/g, '').replace('#Class', '').split('/').pop();
+    const org = item['_group'];
     obj[org] = obj[org] ? obj[org] : [];
     obj[org].push(allElements);
     return obj;
@@ -22,8 +20,8 @@ for(let [organization_url, terms] of Object.entries(dwcTerms)) { /* Build the ht
 
     terms.forEach(term => {
         const label = document.createElement('label')
-        label.textContent = term['label'];
-        label.appendChild(Object.assign(document.createElement('input'), {type: 'checkbox', name: term['label'], checked: defaults.includes(term['label'])}));
+        label.textContent = term['_name'];
+        label.appendChild(Object.assign(document.createElement('input'), {type: 'checkbox', name: term['_name'], checked: defaults.includes(term['_name'])}));
         label.setAttribute('data-skos_definition_en', term['skos_definition_en']);
         label.setAttribute('data-skos_definition_es', term['skos_definition_es']);
         label.setAttribute('data-skos_definition_ja', term['skos_definition_ja']);
@@ -34,10 +32,17 @@ for(let [organization_url, terms] of Object.entries(dwcTerms)) { /* Build the ht
         label.setAttribute('data-skos_prefLabel_zh_hans', term['skos_prefLabel_zh_hans']);
         label.onmouseover = function(e) {
             var lang = document.getElementById('language').value;
-            document.getElementById('asideHeading').textContent = term['label'];
-            document.getElementById('asideDef').textContent = term['skos_definition_' + lang];
-            document.getElementById('asideComments').textContent = term['comments'];
-            document.getElementById('asideEg').textContent = 'Eg: ' + term['examples'];
+            document.getElementById('asideHeading').textContent = term['_name'];
+            if('skos_prefLabel_' + lang in term) {
+                document.getElementById('asideHeading').textContent = term['_name'] +  ' (' + term['skos_prefLabel_' + lang]+ ')';
+            }
+            document.getElementById('asideDef').textContent = term['_dc:description'];
+            if('skos_definition_' + lang in term) {
+                document.getElementById('asideDef').textContent = term['skos_definition_' + lang];
+            } else if(lang != 'en') {
+                document.getElementById('asideDef').textContent = '[No translation available] - ' + term['_dc:description'];
+            }
+            document.getElementById('asideEg').textContent = 'Eg: ' + term['_examples'];
         }
         fieldset.appendChild(label);
     })
