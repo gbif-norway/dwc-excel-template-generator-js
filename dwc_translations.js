@@ -472,7 +472,7 @@ var dwcTranslations = [
     "identifier": "http://rs.tdwg.org/dwc/terms/eventDate",
     "localName": "eventDate",
     "skos_prefLabel_en": "Event Date",
-    "skos_definition_en": "The date-time or interval during which an Event occurred.\n\t\t\tFor occurrences, this is the date-time when the event was recorded.\n\t\t\tNot suitable for a time in a geological context. Recommended best\n\t\t\tpractice is to use an encoding scheme, such as ISO 860",
+    "skos_definition_en": "The date-time or interval during which an Event occurred.\n\t\t\tFor occurrences, this is the date-time when the event was recorded.\n\t\t\tNot suitable for a time in a geological context. Recommended best\n\t\t\tpractice is to use an encoding scheme, such as ISO 8601",
     "skos_prefLabel_es": "Fecha del evento",
     "skos_definition_es": "La fecha y hora o el intervalo durante el cual se produjo un evento. Para los registros de especies, esta es la fecha y hora cuando el evento se registró. No es adecuado para un momento en un contexto geológico. La práctica recomendada es utilizar un esqu",
     "skos_prefLabel_zh_hans": "事件日期",
